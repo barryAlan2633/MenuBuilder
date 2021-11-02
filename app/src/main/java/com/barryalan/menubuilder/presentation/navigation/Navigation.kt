@@ -9,8 +9,8 @@ import androidx.navigation.navArgument
 import com.barryalan.menubuilder.presentation.ingredient_detail.IngredientDetailScreen
 import com.barryalan.menubuilder.presentation.ingredient_detail.IngredientDetailViewModel
 import com.barryalan.menubuilder.presentation.ingredient_list.IngredientListScreen
-import com.barryalan.menubuilder.presentation.ingredient_list.IngredientListViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.barryalan.menubuilder.presentation.ingredient_list.IngredientListViewModel
 
 @Composable
 fun Navigation() {
@@ -18,8 +18,11 @@ fun Navigation() {
     NavHost(navController = navController, startDestination = Screen.IngredientList.route) {
 
         composable(route = Screen.IngredientList.route) { navBackStackEntry ->
+            val viewModel: IngredientListViewModel = hiltViewModel()
+
             IngredientListScreen(
-                onSelectedIngredient = {ingredientId->
+                onSelectedIngredient = { ingredientId ->
+
                     navController.navigate(Screen.IngredientDetail.route + "/$ingredientId")
                 }
             )
@@ -27,13 +30,13 @@ fun Navigation() {
 
         composable(
             route = Screen.IngredientDetail.route + "/{ingredientId}",
-            arguments = listOf(navArgument("ingredientId"){
+            arguments = listOf(navArgument("ingredientId") {
                 type = NavType.StringType
             })
         ) { navBackStackEntry ->
             val viewModel: IngredientDetailViewModel = hiltViewModel()
 
-            IngredientDetailScreen(ingredientId = viewModel.ingredientId.value)
+            IngredientDetailScreen(ingredient = viewModel.ingredient.value)
         }
     }
 }

@@ -3,14 +3,15 @@ package com.barryalan.menubuilder.presentation.ingredient_detail
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import com.barryalan.menubuilder.domain.model.Ingredient
 
 @Composable
 fun IngredientDetailScreen(
-    ingredientId:String?,
+    ingredient: Ingredient?,
 ) {
-    if(ingredientId == null){
-        Text("ERROR")
+    if(ingredient == null){
+        Text("Unable to get the details of this ingredient")
     }else{
-        Text("IngredientDetailScreen $ingredientId")
+        Text("IngredientDetailScreen ${ingredient.name}")
     }
 }
